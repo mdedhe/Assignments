@@ -8,7 +8,7 @@ namespace Assignments
         static void Main(string[] args)
         {
             // Question Number 4th finding the missing numbers 
-            Console.WriteLine("Find the missing number from the below array.");
+            Console.WriteLine("Find the missing number from the below array");
             int[] arr = { 203, 204, 205, 206, 207, 208, 203, 204, 205, 206 };
             Console.WriteLine(string.Join(" ", arr));
             Console.WriteLine();
