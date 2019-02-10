@@ -38,6 +38,22 @@ namespace Assignments
             Console.WriteLine(string.Join(" ", arrMedian));
             int median = findMedian(arrMedian);
             Console.WriteLine("The median of the array is " + median);
+
+            //Question Number 7th closestNumber()
+            int[] inputarry = { -20, -3916237, -357920, -3620601, 7374819, -7330761, 30, 6246457, -6461594, 266854, -520, -470 };
+            Console.WriteLine("Find the closest Number.");
+            Console.WriteLine(string.Join(" ", inputarry));
+            int[] closestArray = closestNumbers(inputarry);
+            Console.WriteLine("The closestArray is ");
+            Console.WriteLine(string.Join(" ", closestArray));
+            Console.ReadKey(true);
+
+            //Question Number 8th dayOftheProgrammer
+            Console.WriteLine("The dayOf the programmer");
+            int year = 2017;
+            string finalString = dayOfProgrammer(year);
+            Console.WriteLine("Day of the programmer "+finalString);
+            Console.ReadKey(true);
         }
         static int[] missingNumbers(int[] arr, int[] brr)
         {
@@ -164,6 +180,150 @@ namespace Assignments
                 median = arrNew[mid];
             }// end of else statement
             return median;
-        }  
+        }
+        static int[] closestNumbers(int[] arr)
+        {
+            int[] arrNew = sortTheArray(arr);
+            int findTheMinDiff = findtheDiff(arrNew);
+            int[] returnArray = finalSol(arrNew, findTheMinDiff);
+            return returnArray;
+        }
+        static int[] finalSol(int[] arr, int min)
+        {
+            ArrayList l = new ArrayList();
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                int differ = arr[i + 1] - arr[i];
+                if (differ == min)
+                {
+                    l.Add(arr[i]);
+                    l.Add(arr[i + 1]);
+                }// end of if statement
+            }// end of for loop
+            int[] finalArray = new int[l.Count];
+            int k = 0;
+            foreach (int i in l)
+            {
+                finalArray[k] = i;
+                k++;
+            }// end of foreach
+            return finalArray; // returning the final array
+        }
+        static int findtheDiff(int[] arr)
+        {
+            int diff = arr[1] - arr[0];
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                int differ = arr[i + 1] - arr[i];
+                if (differ < diff)
+                {
+                    diff = differ;
+                }// end of if statement
+            }// end of for loop
+            return diff;
+        }
+        static int[] sortTheArray(int[] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)// 
+            {
+                for (int j = i; j < arr.Length; j++)
+                {
+                    if (arr[i] > arr[j])
+                    {
+                        int temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }// end of if statement
+                }// end of inner for loop
+            }// end of for loop
+            return arr;
+        }
+        static string dayOfProgrammer(int year)
+        {
+            String finalDate = "";
+            if (year >= 1919)
+                finalDate = getTheDateGregorian(year);
+            else if (year <= 1917)
+                finalDate = getTheDateJulian(year);
+            else
+                finalDate = getTheDate1918(year);
+            //return the date to the function 
+            return finalDate;
+        }
+
+        static string getTheDateGregorian(int year)
+        {
+            String finalDate = "";
+            //on the basis of sum of months in Leap year
+            int daystillAugustLYear = 244;
+            //on the basis of sum of months in normal year 
+            int daystillAugustYear = 243;
+            bool isLeap = isLeapYearGregorian(year);
+            if (isLeap == false)
+            {
+                int date = 256 - daystillAugustYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }// end of if statement
+            else
+            {
+                int date = 256 - daystillAugustLYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }// end of else statement
+            return finalDate;
+        }
+        static string getTheDateJulian(int year) // method for date of Julian year
+        {
+            String finalDate = "";
+            //on the basis of sum of months in Leap year
+            int daytillAugustLYear = 244;
+            //on the basis of sum of months in normal year 
+            int daystillAugustYear = 243;
+            bool isLeap = isLeapYearJulian(year);
+            if (isLeap == false)
+            {
+                int date = 256 - daystillAugustYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }// end of if statement
+            else
+            {
+                int date = 256 - daytillAugustLYear;
+                String format = date.ToString() + ".09." + year.ToString();
+                finalDate = format;
+            }// end of else statement
+            return finalDate;
+        }
+        static string getTheDate1918(int year)// method to get date
+        {
+            String finalDate = "";
+            //because here after the date of 31st Jan directly 14th Feb is there so 
+            int daytillAugustLYear = 230;
+            int date = 256 - daytillAugustLYear;
+            String format = date.ToString() + ".09." + year.ToString();
+            finalDate = format;
+            return finalDate;
+        }
+        static bool isLeapYearJulian(int year)// method for checking Julian year
+        {
+            bool flag = false;
+
+            if (year % 4 == 0)
+                flag = true;
+
+            return flag;
+        }
+
+        static bool isLeapYearGregorian(int year)// method for checking Gregorian year
+        {
+            bool flag = false;
+
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+                flag = true;
+
+            return flag;
+        }
+
     }
 }
